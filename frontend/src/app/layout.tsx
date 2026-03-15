@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import ThemeRegistry from "@/components/ThemeRegistry";
 import "./globals.css";
 
@@ -38,9 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${firaCode.variable}`}>
       <body>
-        <AppRouterCacheProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
-        </AppRouterCacheProvider>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );

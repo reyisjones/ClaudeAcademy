@@ -1,9 +1,12 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from typing import list
+from typing import List
+from pathlib import Path
+
+_env_path = Path(__file__).resolve().parent.parent.parent / ".env"
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=str(_env_path), env_file_encoding="utf-8", extra="ignore")
 
     # App
     app_name: str = "ClaudeTuts API"
@@ -11,7 +14,7 @@ class Settings(BaseSettings):
     environment: str = "development"
 
     # Anthropic
-    anthropic_api_key: str
+    anthropic_api_key: str = ""
 
     # Database
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/claudetuts"
@@ -24,8 +27,8 @@ class Settings(BaseSettings):
     chroma_port: int = 8008
 
     # Security
-    allowed_origins: list[str] = ["http://localhost:3000"]
-    allowed_hosts: list[str] = ["*"]
+    allowed_origins: List[str] = ["http://localhost:3000", "http://localhost:3001"]
+    allowed_hosts: List[str] = ["*"]
     secret_key: str = "change-me-in-production"
 
     # Observability
