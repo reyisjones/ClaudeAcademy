@@ -1,4 +1,4 @@
-Absolutely — here’s a practical **Anthropic / Claude self-study pack** for your profile as a software engineer building AI, automation, and enterprise solutions.
+Here’s a practical **Anthropic / Claude self-study pack** for your profile as a software engineer building AI, automation, and enterprise solutions.
 
 ## 1) What’s free right now
 
@@ -234,7 +234,7 @@ That order gets you from fundamentals to something you can actually deploy in an
 
 ## 9) Bottom line
 
-Yes — there are **real free Anthropic learning resources**, and the best ones are not just videos. The strongest free stack is:
+There are **real free Anthropic learning resources**, and the best ones are not just videos. The strongest free stack is:
 
 * **Anthropic Academy / Learn**
 * **AI Fluency**
@@ -242,10 +242,6 @@ Yes — there are **real free Anthropic learning resources**, and the best ones 
 * **Anthropic GitHub repos**
 * **Anthropic YouTube**
 * **DeepLearning.AI Claude Code course** ([Anthropic][1])
-
-For your background, the sweet spot is to study **prompting + APIs + evals + MCP + Claude Code**, then turn that into an **enterprise AI copilot** project.
-
-I can turn this into a **detailed weekly roadmap with hands-on labs and project milestones** tailored to your Azure + GitHub + enterprise AI goals.
 
 [1]: https://www.anthropic.com/learn "AI Learning Resources & Guides from Anthropic \ Anthropic"
 [2]: https://www.anthropic.com/learn/claude-for-you "AI Fluency: Framework and Foundations \ Anthropic"

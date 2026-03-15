@@ -1,7 +1,3 @@
-Yes — the page you shared (**Anthropic Learn / Anthropic Academy**) actually includes **several free AI learning resources**, and there are **multiple free study materials across GitHub, courses, and videos**. Below is a **structured analysis of what is available and where to study for free**.
-
----
-
 # 1. Official Anthropic Learning Platform
 
 **URL:** [https://www.anthropic.com/learn](https://www.anthropic.com/learn)
@@ -206,15 +202,6 @@ Recommended repositories:
 Anthropic is focusing heavily on **AI Agents, Tool Use, and MCP (Model Context Protocol)**. Those topics are becoming the **core ecosystem around Claude** and are worth studying.
 
 ---
-
-✅ Since you work heavily with **AI agents, automation, and developer tooling**, I can also create for you:
-
-* **A complete Anthropic / Claude study roadmap (developer level)**
-* **Top GitHub projects to practice building AI agents**
-* **A Claude vs OpenAI vs Azure AI architecture comparison**
-* **A practical project: building an AI agent with Claude + Azure + GitHub**
-
-Just tell me and I’ll build a **complete learning path for your profile.**
 
 [1]: https://www.anthropic.com/learn?utm_source=chatgpt.com "AI Learning Resources & Guides from Anthropic"
 [2]: https://dev.to/ji_ai/anthropic-dropped-13-free-courses-i-broke-down-every-single-one-p87?utm_source=chatgpt.com "Anthropic Dropped 13 Free Courses — I Broke Down ..."
