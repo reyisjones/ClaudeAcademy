@@ -1,0 +1,105 @@
+---
+title: System Prompts
+slug: system-prompts
+module: prompt-engineering
+difficulty: beginner
+duration_minutes: 12
+tags: [prompts, system, context, persona]
+---
+
+# System Prompts
+
+A **system prompt** is a special message that sets the context, persona, and instructions for Claude *before* the conversation begins. It's the most powerful way to customize Claude's behavior.
+
+## Anatomy of a System Prompt
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+response = client.messages.create(
+    model="claude-opus-4-5",
+    max_tokens=1024,
+    system="""You are a senior Python engineer with 15 years of experience.
+When reviewing code:
+- Identify bugs and security issues first
+- Suggest idiomatic improvements
+- Be concise but thorough
+- Use code examples in your feedback""",
+    messages=[
+        {"role": "user", "content": "Review this code:\n\ndef get_user(id):\n    query = f'SELECT * FROM users WHERE id={id}'\n    return db.execute(query)"}
+    ]
+)
+
+print(response.content[0].text)
+```
+
+## What to Include in System Prompts
+
+| Element | Purpose | Example |
+|---|---|---|
+| **Persona** | Define who Claude is | "You are a math tutor for high school students" |
+| **Task** | What Claude should do | "Help users understand calculus concepts" |
+| **Format** | How to structure output | "Always respond with step-by-step explanations" |
+| **Constraints** | What to avoid | "Do not provide direct answers to homework problems" |
+| **Context** | Background information | "The user is studying for AP Calculus" |
+
+## Best Practices
+
+### 1. Be Specific
+Vague system prompts produce inconsistent results.
+
+❌ "Be helpful"
+✅ "Answer questions about JavaScript. When users ask about errors, first identify the root cause, then provide a corrected code example."
+
+### 2. Use XML Tags for Structure
+Claude responds well to XML-structured system prompts:
+
+```python
+system = """
+<role>You are a helpful AI tutor for ClaudeTuts.</role>
+
+<guidelines>
+- Explain concepts clearly for beginners
+- Use code examples for technical topics
+- Ask follow-up questions to check understanding
+- Never give homework answers directly — guide instead
+</guidelines>
+
+<format>
+Always end your response with a "Key Takeaway" summary in one sentence.
+</format>
+"""
+```
+
+### 3. Include Examples
+Few-shot examples in system prompts dramatically improve output quality.
+
+---
+
+## Exercise
+
+Modify the system prompt below to make Claude respond only in haiku form:
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+# Change the system prompt to make Claude respond in haiku!
+response = client.messages.create(
+    model="claude-haiku-3-5",
+    max_tokens=200,
+    system="You are a helpful assistant.",  # ← change this
+    messages=[{"role": "user", "content": "What is machine learning?"}]
+)
+
+print(response.content[0].text)
+```
+
+---
+
+## Key Takeaway
+
+System prompts are the most powerful tool for controlling Claude's behavior — invest time in crafting them carefully.

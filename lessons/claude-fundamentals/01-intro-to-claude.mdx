@@ -1,0 +1,105 @@
+---
+title: Introduction to Claude
+slug: intro-to-claude
+module: claude-fundamentals
+difficulty: beginner
+duration_minutes: 10
+tags: [claude, anthropic, api, llm]
+---
+
+# Introduction to Claude
+
+Claude is a family of AI assistants built by **Anthropic**, designed to be helpful, harmless, and honest.
+
+## What is Claude?
+
+Claude is a large language model (LLM) that can:
+- Answer questions and explain concepts
+- Write and debug code
+- Analyze documents and data
+- Build complex multi-step workflows with tools
+
+## Key Concepts
+
+### Models
+
+Anthropic provides several Claude models with different capability/cost tradeoffs:
+
+| Model | Description | Best For |
+|---|---|---|
+| claude-opus-4 | Most capable | Complex reasoning, agents |
+| claude-sonnet-4 | Balanced | Most production tasks |
+| claude-haiku-3 | Fastest/cheapest | High-volume, simple tasks |
+
+### Messages API
+
+The core of every Claude integration is the **Messages API**:
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+message = client.messages.create(
+    model="claude-opus-4-5",
+    max_tokens=1024,
+    messages=[
+        {"role": "user", "content": "What is the capital of France?"}
+    ]
+)
+
+print(message.content[0].text)
+# → "The capital of France is Paris."
+```
+
+### Tokens
+
+Claude processes text as **tokens** — roughly 4 characters per token or ¾ of a word. Understanding tokens is important for:
+- **Cost estimation** — you pay per input/output token
+- **Context limits** — models have a maximum context window
+- **Performance** — longer prompts are slower and more expensive
+
+---
+
+## Exercise
+
+Try calling the Claude API with different user messages. Observe how the response changes.
+
+```python
+import anthropic
+
+client = anthropic.Anthropic()
+
+# Try changing this message!
+user_message = "Explain what a token is in 1 sentence."
+
+response = client.messages.create(
+    model="claude-haiku-3-5",
+    max_tokens=200,
+    messages=[{"role": "user", "content": user_message}]
+)
+
+print(response.content[0].text)
+```
+
+---
+
+## Quiz
+
+1. What company built Claude?
+   - a) OpenAI
+   - b) Anthropic ✅
+   - c) Google DeepMind
+   - d) Meta AI
+
+2. What format does the Messages API use for conversation history?
+   - a) Plain text
+   - b) XML
+   - c) Alternating role/content pairs ✅
+   - d) JSON-LD
+
+---
+
+## Next Lesson
+
+[Claude API Basics →](api-basics)

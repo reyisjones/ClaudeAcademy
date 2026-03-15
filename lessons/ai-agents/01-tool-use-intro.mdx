@@ -1,0 +1,156 @@
+---
+title: Introduction to Tool Use
+slug: tool-use-intro
+module: ai-agents
+difficulty: intermediate
+duration_minutes: 18
+tags: [tools, function-calling, agents, agentic]
+---
+
+# Introduction to Tool Use
+
+**Tool use** (also called function calling) lets Claude execute functions in your application — searching databases, calling APIs, running calculations, and more. It's the foundation of AI agents.
+
+## How Tool Use Works
+
+1. You define tools with a name, description, and input schema
+2. Claude decides when to call a tool based on the user's request
+3. Your code executes the tool and returns the result
+4. Claude incorporates the result into its response
+
+```
+User → Claude → Tool call → Your code → Result → Claude → Response
+```
+
+## Defining a Tool
+
+```python
+import anthropic
+import json
+
+client = anthropic.Anthropic()
+
+tools = [
+    {
+        "name": "get_weather",
+        "description": "Get the current weather for a city",
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "city": {
+                    "type": "string",
+                    "description": "The city name, e.g. 'San Francisco'"
+                },
+                "unit": {
+                    "type": "string",
+                    "enum": ["celsius", "fahrenheit"],
+                    "description": "Temperature unit"
+                }
+            },
+            "required": ["city"]
+        }
+    }
+]
+
+# Simulated tool implementation
+def get_weather(city: str, unit: str = "celsius") -> dict:
+    # In real code, call a weather API here
+    return {"city": city, "temperature": 22, "unit": unit, "condition": "Sunny"}
+
+# First API call — Claude may call the tool
+response = client.messages.create(
+    model="claude-opus-4-5",
+    max_tokens=1024,
+    tools=tools,
+    messages=[{"role": "user", "content": "What's the weather in Tokyo?"}]
+)
+
+# Handle tool use
+if response.stop_reason == "tool_use":
+    tool_block = next(b for b in response.content if b.type == "tool_use")
+    tool_result = get_weather(**tool_block.input)
+
+    # Second API call with tool result
+    final_response = client.messages.create(
+        model="claude-opus-4-5",
+        max_tokens=1024,
+        tools=tools,
+        messages=[
+            {"role": "user", "content": "What's the weather in Tokyo?"},
+            {"role": "assistant", "content": response.content},
+            {
+                "role": "user",
+                "content": [{
+                    "type": "tool_result",
+                    "tool_use_id": tool_block.id,
+                    "content": json.dumps(tool_result)
+                }]
+            }
+        ]
+    )
+    print(final_response.content[0].text)
+```
+
+## Tool Design Best Practices
+
+| Principle | Description |
+|---|---|
+| **Single responsibility** | Each tool should do one thing well |
+| **Clear descriptions** | Claude uses descriptions to decide when to call a tool |
+| **Typed inputs** | Use JSON Schema to specify input types and constraints |
+| **Graceful errors** | Return structured error information, not exceptions |
+
+---
+
+## Exercise
+
+Add a `calculate` tool that evaluates math expressions:
+
+```python
+import anthropic
+import json
+
+client = anthropic.Anthropic()
+
+tools = [
+    # Add your calculate tool here!
+    {
+        "name": "calculate",
+        "description": "...",  # write a good description
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "expression": {
+                    "type": "string",
+                    "description": "..."
+                }
+            },
+            "required": ["expression"]
+        }
+    }
+]
+
+def calculate(expression: str) -> dict:
+    try:
+        # Only allow safe math expressions
+        result = eval(expression, {"__builtins__": {}}, {})
+        return {"result": result}
+    except Exception as e:
+        return {"error": str(e)}
+
+response = client.messages.create(
+    model="claude-haiku-3-5",
+    max_tokens=500,
+    tools=tools,
+    messages=[{"role": "user", "content": "What is 15% of 847?"}]
+)
+
+print(response.stop_reason)
+print(response.content)
+```
+
+---
+
+## Key Takeaway
+
+Tool use transforms Claude from a conversationalist into an agent that can take real actions in your application.
