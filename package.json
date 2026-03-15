@@ -1,0 +1,25 @@
+{
+  "name": "claudetuts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source AI learning platform for the Anthropic / Claude ecosystem",
+  "license": "MIT",
+  "workspaces": [
+    "frontend",
+    "tests"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=frontend\" \"cd backend && uvicorn app.main:app --reload\"",
+    "build": "npm run build --workspace=frontend",
+    "lint": "npm run lint --workspace=frontend",
+    "test": "npm run test --workspace=frontend && cd backend && pytest",
+    "test:e2e": "npm run test:e2e --workspace=tests",
+    "format": "prettier --write \"frontend/src/**/*.{ts,tsx}\"",
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0",
+    "prettier": "^3.3.0"
+  }
+}
